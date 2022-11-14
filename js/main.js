@@ -2,10 +2,14 @@ const playBtnEl = document.getElementById('btnPlay');
 const numbersContainerEl = document.querySelector('.number-container');
 
 playBtnEl.addEventListener('click', function () {
+	const modeSelectEl = document.getElementById('modeSelect');
+	const mode = modeSelectEl.value;
+
 	const numbersToGuess = [];
 	numbersContainerEl.innerHTML = '';
+	playBtnEl.classList.add('d-none');
 
-	while (numbersToGuess.length < 5) {
+	while (numbersToGuess.length < mode) {
 		const random = getRandomNumber(1, 10);
 
 		if (!numbersToGuess.includes(random)) {
@@ -20,13 +24,17 @@ playBtnEl.addEventListener('click', function () {
 	setTimeout(function () {
 		const userNumbers = [];
 		while (userNumbers.length < numbersToGuess.length) {
-			const userNumber = parseInt(prompt('inserisci numero'));
+			const userNumber = parseInt(
+				prompt('inserisci un numero alla volta: ')
+			);
 			userNumbers.push(userNumber);
 		}
 		console.log(numbersToGuess);
 		console.log(userNumbers);
 
 		checkForWin(userNumbers, numbersToGuess);
+
+		playBtnEl.classList.remove('d-none');
 	}, 3010);
 });
 
